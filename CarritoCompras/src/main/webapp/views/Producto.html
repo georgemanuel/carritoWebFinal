@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<style>
+		body {
+			font-family: sans-serif;
+		}
+		form {
+			display: table;
+			padding: 10px;
+			border: thin dotted #7e7e7e;
+			background-color: teal;
+		}
+		form textarea {
+			width: 500px;
+			height: 200px;
+		}
+		div.tableRow {
+			display: table-row;
+		}
+		div.tableRow p {
+			display: table-cell;
+			vertical-align: top;
+			padding: 3px;
+		}
+		div.tableRow p:first-child {
+			text-align: right;
+		}
+		ul li {
+			display: inline;
+			padding: 5px 10px 5px 10px;
+			}
+		ul {
+			background-color: teal;
+			color:white;
+			margin: 10px 10px 0px 10px;
+			list-style-type: none;
+			padding: 5px 0px 5px 0px;
+			border-bottom-left-radius: 13px;
+			border-bottom-right-radius: 13px;
+			}
+		header{
+			background-image: url("imagenes/pared.jpg");
+			background-repeat: repeat-x;
+			background-position: right;
+			background-color: navy;
+			margin: 10px 10px 0px 10px;
+			height: 175px;
+			color: white;
+			border-top-left-radius: 13px;
+			border-top-right-radius: 13px;
+			}
+		h1 {
+			margin: 10px;
+			padding: 30px;
+			text-align: center;
+			font-family: sans-serif;
+			font-size: 75px;
+			}
+	</style>
+	<meta charset="utf-8">
+	<title>Agregar Productos</title>
+</head>
+<body>
+	<header>
+		<h1>AGREGAR PRODUCTOS</h1>
+	</header>
+	<nav>
+		<ul>
+			<li>Home</li>
+			<li>Catalogo</li>
+			<li>Carrito de Compras</li>
+			<li>Mi cuenta</li>
+		</ul>
+	</nav>
+	<p>
+		Solo llena el formulario con los datos del producto a agregar.
+	</p>
+	
+	<form>
+		<div class = "tableRow">
+			<p>
+				ID: <input type= "text" name = "idProducto" value = ""> <br>
+				Nombre: <input type= "text" name = "nombreProducto" value = ""> <br>
+				Precio: <input type= "text" name = "precioProducto" value = ""> <br>
+				Color: <input type= "text" name = "colorProducto" value = ""> <br>
+				Marca: <input type= "text" name = "marcaProducto" value = ""> <br>
+				Imagen: <input type= "text" name = "imagenProducto" value = ""> <br>
+			</p>
+			<p>
+				<input type= "submit" value = "Guardar"><br><br><br><br><br><br>
+				<input type= "submit" value = "Imagen">
+			</p>
+	</form>
+</body>
+</html>
