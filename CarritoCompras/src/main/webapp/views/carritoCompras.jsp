@@ -1,3 +1,6 @@
+<%@ page import="smart.capacitacion.modelo.Producto" %>
+<%@ page import="java.util.*" %>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -29,7 +32,7 @@
 			border-bottom-right-radius: 13px;
 			}
 		header{
-			background-image: url("imagenes/pared.jpg");
+			background-image: url("img/pared.jpg");
 			background-repeat: repeat-x;
 			background-position: right;
 			background-color: navy;
@@ -75,9 +78,11 @@
 	</p>
 	<section>
 	<table>
+		<%List <Producto> productos = new ArrayList<Producto>();%>
+		<% for (int i=0; i<productos.size();i++){%>
 		<tr>
 			<td>
-				<img src="imagenes/converse.jpg" alt = "tenis converse">
+				<img src="../img/converse.jpg" alt = "tenis converse">
 				<p>
 					Tenis Converse $800
 				</p>
@@ -88,59 +93,8 @@
 					<input type= "submit" value= "Comprar">
 				</p>
 			</td>
-			
-			<td>
-				<img src = "imagenes/bicicleta.jpg" alt = "bicicleta">
-				<p>
-					Bicicleta $10,000
-				</p>
-				<p>
-					<input type= "submit" value= "Eliminar">
-				</p>
-				<p>
-					<input type= "submit" value= "Comprar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "imagenes/gameBoy.jpg" alt= "gameBoy">
-				<p>
-					Game boy $5000
-				</p>
-				<p>
-					<input type= "submit" value= "Eliminar">
-				</p>
-				<p>
-					<input type= "submit" value= "Comprar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "imagenes/espada.jpg" alt= "espada">
-				<p>
-					Espada $18,000
-				</p>
-				<p>
-					<input type= "submit" value= "Eliminar">
-				</p>
-				<p>
-					<input type= "submit" value= "Comprar">
-				</p>
-				
-			</td>
-			
-			<td>
-				<img src = "imagenes/casco.jpg" alt= "casco">
-				<p>
-					Casco $900
-				</p>
-				<p>
-					<input type= "submit" value= "Eliminar">
-				</p>
-				<p>
-					<input type= "submit" value= "Comprar">
-				</p>
-			</td>
+		</tr>	
+		<%}%>	
 	</table>
 	
 	</section>

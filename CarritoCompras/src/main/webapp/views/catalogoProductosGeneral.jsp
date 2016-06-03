@@ -1,3 +1,4 @@
+<%@ page import="smart.capacitacion.modelo.CarritoCompras" %>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -29,7 +30,7 @@
 			border-bottom-right-radius: 13px;
 			}
 		header{
-			background-image: url("imagenes/pared.jpg");
+			background-image: url("../img/pared.jpg");
 			background-repeat: repeat-x;
 			background-position: right;
 			background-color: navy;
@@ -66,7 +67,8 @@
 		<ul>
 			<li>Home</li>
 			<li>Catalogo</li>
-			<li>Carrito de Compras</li>
+			<%CarritoCompras carritoCompras = (CarritoCompras)(session.getAttribute("carritoCompras"));  %>
+			<li><a href="../ProductoServlet">Carrito de Compras (<%= carritoCompras.getProductosEnCarrito().size() %>)Productos</a></li>
 			<li>Mi cuenta</li>
 		</ul>
 	</nav>
@@ -77,7 +79,7 @@
 	<table>
 		<tr>
 			<td>
-				<img src="imagenes/converse.jpg" alt = "tenis converse">
+				<img src="../img/converse.jpg" alt = "tenis converse">
 				<p>
 					Tenis Converse $800
 				</p>
@@ -87,7 +89,7 @@
 			</td>
 			
 			<td>
-				<img src = "imagenes/bicicleta.jpg" alt = "bicicleta">
+				<img src = "../img/bicicleta.jpg" alt = "bicicleta">
 				<p>
 					Bicicleta $10,000
 				</p>
@@ -97,7 +99,7 @@
 			</td>
 			
 			<td>
-				<img src = "imagenes/gameBoy.jpg" alt= "gameBoy">
+				<img src = "../img/gameBoy.jpg" alt= "gameBoy">
 				<p>
 					Game boy $5000
 				</p>
@@ -107,7 +109,7 @@
 			</td>
 			
 			<td>
-				<img src = "imagenes/espada.jpg" alt= "espada">
+				<img src = "../img/espada.jpg" alt= "espada">
 				<p>
 					Espada $18,000
 				</p>
@@ -117,7 +119,7 @@
 			</td>
 			
 			<td>
-				<img src = "imagenes/casco.jpg" alt= "casco">
+				<img src = "../img/casco.jpg" alt= "casco">
 				<p>
 					Casco $900
 				</p>
@@ -125,10 +127,12 @@
 					<input type= "submit" value= "Agregar">
 				</p>
 			</td>
+		</tr>
 	</table>
 	<table>
+		<tr>
 			<td>
-				<img src = "imagenes/jabon.jpg" alt= "jabon">
+				<img src = "../img/jabon.jpg" alt= "jabon">
 				<p>
 					Jabon $15
 				</p>
@@ -138,7 +142,7 @@
 			</td>
 			
 			<td>
-				<img src = "imagenes/botella_color.jpg" alt= "botella_color">
+				<img src = "../img/botella_color.jpg" alt= "botella_color">
 				<p>
 					Botella de color $20
 				</p>
@@ -148,7 +152,7 @@
 			</td>
 			
 			<td>
-				<img src = "imagenes/millenium_falcon.jpg" alt= "millenium_falcon">
+				<img src = "../img/millenium_falcon.jpg" alt= "millenium_falcon">
 				<p>
 					Millenium Falcon $900,000
 				</p>
@@ -158,7 +162,7 @@
 			</td>
 			
 			<td>
-				<img src = "imagenes/at-at.jpg" alt= "at-at">
+				<img src = "../img/at-at.jpg" alt= "at-at">
 				<p>
 					Mascota AT-AT $3000
 				</p>
@@ -168,7 +172,7 @@
 			</td>
 		
 			<td>
-				<img src = "imagenes/mustang.jpg" alt= "mustang">
+				<img src = "../img/mustang.jpg" alt= "mustang">
 				<p>
 					Mustang $800,000
 				</p>
@@ -176,6 +180,7 @@
 					<input type= "submit" value= "Agregar">
 				</p>
 			</td>
+		</tr>
 	</table>
 	</section>
 </body>

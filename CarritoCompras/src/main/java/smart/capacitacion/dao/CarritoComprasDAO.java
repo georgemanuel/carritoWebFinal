@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import smart.capacitacion.modelo.CarritoCompras;
-import smart.capacitacion.modelo.Producto;
-import smart.capacitacion.modelo.Usuario;
 
 public class CarritoComprasDAO extends DAOGeneral{
 	 Connection conexion = null;

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import smart.capacitacion.modelo.CarritoCompras;
 import smart.capacitacion.modelo.Usuario;
 import smart.capacitacion.service.UsuarioService;
 import smart.capacitacion.service.UsuarioServiceImpl;
@@ -32,12 +33,19 @@ public class UsuarioServlet extends HttpServlet {
 		Usuario usuario = new Usuario();
 		usuario.setEmailUsuario(request.getParameter("usuario"));
 		usuario.setPasswordUsuario(request.getParameter("password"));
-		if (this.usuarioService.login(usuario)){
-			response.sendRedirect("views/catalogoProductosGeneral.html");
+		usuario = this.usuarioService.login(usuario);
+		if (usuario != null){
+			CarritoCompras carritoCompras = usuarioService.obtenerCarritoComprasByUsuario(usuario);
+			request.getSession().setAttribute("carritoCompras", carritoCompras);
+			System.out.println("Ya existe carrito");
+			
+			response.sendRedirect("views/catalogoProductosGeneral.jsp");
+			
 		}	
 		else{
 			request.getSession().setAttribute("error", "DATOS NO VALIDOS");
 			response.sendRedirect("views/login.jsp");
+			System.out.println("Usuario no existe y/o Carrito vacio");
 		}
 	}
 
