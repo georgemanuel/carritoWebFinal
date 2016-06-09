@@ -1,9 +1,9 @@
 package smart.capacitacion.service;
 
+import smart.capacitacion.dao.CarritoComprasDAO;
 import smart.capacitacion.dao.UsuarioDAO;
 import smart.capacitacion.modelo.CarritoCompras;
 import smart.capacitacion.modelo.Usuario;
-
 
 public class UsuarioServiceImpl implements UsuarioService {
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -29,15 +29,25 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public CarritoCompras obtenerCarritoComprasByUsuario(Usuario usuario) {
 		// TODO Auto-generated method stub
-		CarritoCompras carritoCompras = this.usuarioDAO.obtenerCarritoComprasByUsuario(usuario);
-		if ( carritoCompras!=null){
+		CarritoCompras carritoCompras = usuarioDAO.obtenerCarritoComprasByUsuario(usuario);
+
+		if (carritoCompras != null) {
+			return carritoCompras;
+		} else {
+			CarritoComprasDAO carritoDAO = new CarritoComprasDAO();
+			carritoDAO.crearCarritoByUsuario(usuario);
+
 			return carritoCompras;
 		}
-		else{
-			//Codigo para crear el carrito
-			return null;
-		}
+
 	}
-	
+
+	@Override
+	public Usuario crearUsuarioByUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+
+		return usuarioDAO.crearUsuarioByUsuario(usuario);
+
+	}
 
 }

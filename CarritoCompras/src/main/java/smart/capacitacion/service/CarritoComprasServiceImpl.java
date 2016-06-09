@@ -14,9 +14,9 @@ public class CarritoComprasServiceImpl implements CarritoComprasService {
 	UsuarioDAO usuarioDAO = new UsuarioDAO();
 	
 	@Override
-	public boolean crearCarrito(CarritoCompras carritoCompras) {
+	public CarritoCompras crearCarritoByUsuario(Usuario usuario) {
 		
-		return carritoComprasDAO.crearCarrito(carritoCompras);
+		return carritoComprasDAO.crearCarritoByUsuario(usuario);
 	}
 
 	@Override
@@ -26,10 +26,25 @@ public class CarritoComprasServiceImpl implements CarritoComprasService {
 	}
 
 	@Override
-	public boolean agregarProductoAlCarrito(CarritoCompras carritoCompras) {
-		
-		return this.carritoComprasDAO.agregarProductoAlCarrito(carritoCompras);
+	public Producto agregarProductoAlCarrito(CarritoCompras carritoCompras) {
+			return this.carritoComprasDAO.agregarProductoAlCarrito(carritoCompras);
+	}
+	
+	@Override
+	public CarritoCompras obtenerCarritoComprasByUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		CarritoCompras carritoCompras = usuarioDAO.obtenerCarritoComprasByUsuario(usuario);
+
+		if (carritoCompras != null) {
+			return carritoCompras;
+		} else {
+			CarritoComprasDAO carritoDAO = new CarritoComprasDAO();
+			carritoDAO.crearCarritoByUsuario(usuario);
+			return carritoCompras;
+		}
+
 	}
 
-
 }
+
+

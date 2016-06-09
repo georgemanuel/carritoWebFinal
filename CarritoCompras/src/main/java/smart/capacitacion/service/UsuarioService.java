@@ -9,4 +9,5 @@ public interface UsuarioService {
 	public String borrarCuenta(String borrarCuentaUsuario);
 	public Usuario login(Usuario usuario);
 	public CarritoCompras obtenerCarritoComprasByUsuario(Usuario usuario);
+	public Usuario crearUsuarioByUsuario(Usuario usuario);
 }

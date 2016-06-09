@@ -3,6 +3,10 @@ package smart.capacitacion.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import smart.capacitacion.modelo.Producto;
 
 public class ProductoDAO extends DAOGeneral{
 	 Connection conexion = null;
@@ -19,7 +23,6 @@ public class ProductoDAO extends DAOGeneral{
         	 String consultaSQL = "select * from \"PRODUCTO\" where \"ID_PRODUCTO\"='"+idProducto+"'";
         	 System.out.println(consultaSQL);
         	 resultado = sentencia.executeQuery(consultaSQL);
-        	 //String productoNoExiste = "N/E";
         	 while (resultado.next()) {
         		 idProducto = resultado.getInt("ID_PRODUCTO");
         		 System.out.println("Resultado: "+idProducto);
@@ -30,6 +33,30 @@ public class ProductoDAO extends DAOGeneral{
         	 error.printStackTrace();
          }
          return null;
- 
 	 }
+
+	public List<Producto> obtenerTodosLosProductos() {
+		// TODO Auto-generated method stub
+		try{
+	       	 sentencia = conexion.createStatement();
+	       	 String consultaSQL = "select * from \"PRODUCTO\"";
+	       	 System.out.println(consultaSQL);
+	       	 resultado = sentencia.executeQuery(consultaSQL);
+	       	 List<Producto> productos = new ArrayList<Producto>();
+	       	 Producto producto;
+	       	 while (resultado.next()) {
+	       		 producto = new Producto();
+	       		 producto.setIdProducto(resultado.getInt("ID_PRODUCTO"));
+	       		 producto.setNombreProducto(resultado.getString("NOMBRE_PRODUCTO"));
+	       		 productos.add(producto);
+	       	}
+	       	return productos;
+	    }
+        catch(Exception error){
+       	 error.printStackTrace();
+        }
+        return null;
+	}
+	 
+	 
 }

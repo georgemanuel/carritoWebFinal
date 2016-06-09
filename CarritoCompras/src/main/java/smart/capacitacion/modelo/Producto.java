@@ -6,7 +6,7 @@ public class Producto {
 	// test
 	private Integer idProducto;
 	private String nombreProducto;
-	private String precioProducto;
+	private Integer precioProducto;
 	private String colorProducto;
 	private String marcaProducto;
 	private List<Producto> todosLosProductos;
@@ -15,7 +15,7 @@ public class Producto {
 		
 	}
 
-	public Producto(Integer idProducto, String nombreProducto, String precioProducto, String colorProducto,
+	public Producto(Integer idProducto, String nombreProducto, Integer precioProducto, String colorProducto,
 			String marcaProducto, List<Producto> todosLosProductos) {
 		super();
 		this.idProducto = idProducto;
@@ -42,11 +42,11 @@ public class Producto {
 		this.nombreProducto = nombreProducto;
 	}
 
-	public String getPrecioProducto() {
+	public Integer getPrecioProducto() {
 		return precioProducto;
 	}
 
-	public void setPrecioProducto(String precioProducto) {
+	public void setPrecioProducto(Integer precioProducto) {
 		this.precioProducto = precioProducto;
 	}
 

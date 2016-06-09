@@ -3,13 +3,12 @@ package smart.capacitacion.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
+import java.util.ArrayList;
 
-import smart.capacitacion.controller.UsuarioServlet;
 import smart.capacitacion.modelo.CarritoCompras;
+import smart.capacitacion.modelo.Producto;
 import smart.capacitacion.modelo.Usuario;
-import smart.capacitacion.service.CarritoComprasService;
-import smart.capacitacion.service.CarritoComprasServiceImpl;
-import smart.capacitacion.service.UsuarioServiceImpl;
 
 public class UsuarioDAO extends DAOGeneral{
 	 Connection conexion = null;
@@ -59,27 +58,68 @@ public class UsuarioDAO extends DAOGeneral{
 		return null;
 	}
 	
-	public CarritoCompras obtenerCarritoComprasByUsuario(Usuario usuario){
-		try{
-       	 	sentencia = conexion.createStatement();
-       	 	String consultaSQL = "SELECT \"ID_CARRITO\" FROM \"USUARIO\" U INNER JOIN \"CARRITO_COMPRAS\" C ON U.\"ID_USUARIO\" = C.\"ID_USUARIO\" WHERE U.\"ID_USUARIO\" = " + usuario.getIdUsuario() + ";";
-       	 	System.out.println(consultaSQL);
-       	 	resultado = sentencia.executeQuery(consultaSQL);
-       	 	while(resultado.next()){
-       	 		CarritoCompras carritoCompras = new CarritoCompras();
-       	 		carritoCompras.setIdCarrito(resultado.getInt("ID_CARRITO"));
-       	 		//un join carrito y producto
-       	 		//crear una lista de carrito List <
-       	 		//ejecutar el query y en el while 
-       	 		//llenar la lista de productos
-       	 		// settear la lista en el productosCarrito de CarritoCompras
-       	 		return carritoCompras;
-       	 	}
-       	 	return null;
-       	 }
-         catch(Exception error){
-       	 error.printStackTrace();
-        }
+	public CarritoCompras obtenerCarritoComprasByUsuario(Usuario usuario) {
+		try {
+
+			sentencia = conexion.createStatement();
+			String consultaSQL = "SELECT \"ID_CARRITO\"  FROM \"USUARIO\" U INNER JOIN \"CARRITO_COMPRAS\" C ON (U.\"ID_USUARIO\" = C.\"ID_USUARIO\") WHERE U.\"ID_USUARIO\"='" + usuario.getIdUsuario() + "'";
+			System.out.println(consultaSQL);
+			resultado = sentencia.executeQuery(consultaSQL);
+			while (resultado.next()) {
+				CarritoCompras carritoCompras = new CarritoCompras();
+				carritoCompras.setIdCarrito(resultado.getInt("ID_CARRITO"));
+				consultaSQL = "SELECT * FROM \"CARRITO_PRODUCTO\" CP INNER JOIN \"PRODUCTO\" P ON P.\"ID_PRODUCTO\" = CP.\"ID_PRODUCTO\" WHERE CP.\"ID_CARRITO\"="+carritoCompras.getIdCarrito();
+				resultado = sentencia.executeQuery(consultaSQL);
+				List<Producto> productos = new ArrayList<Producto>();
+				Producto producto;
+				while (resultado.next()) {
+					producto = new Producto();
+					producto.setIdProducto(resultado.getInt("ID_PRODUCTO"));
+					producto.setNombreProducto(resultado.getString("NOMBRE_PRODUCTO"));
+					producto.setColorProducto(resultado.getString("COLOR"));
+					producto.setPrecioProducto(resultado.getInt("PRECIO"));
+					producto.setMarcaProducto(resultado.getString("MARCA"));
+					//Agregar todos los atributos
+					productos.add(producto);
+				}				
+				carritoCompras.setProductosEnCarrito(productos);
+				return carritoCompras;
+			}
+
+		} catch (Exception error) {
+			error.printStackTrace();
+		}
 		return null;
 	}
+
+	public Usuario crearUsuarioByUsuario(Usuario usuario) {
+		try {
+			sentencia = conexion.createStatement();
+			String consultaSQL = "INSERT INTO public.\"USUARIO\"(\"ID_USUARIO\",\"NOMBRE_USUARIO\","
+					+ "\"PATERNO\",\"MATERNO\",\"SEXO\",\"CALLE\",\"COLONIA\",\"NUMERO\","
+					+ "\"DELEGACION\",\"TEL_CASA\",\"CELULAR\",\"RFC\",\"EMAIL\",\"PASSWORD\",\"FECHA_NACIMIENTO\")" + "VALUES ("
+					+ "nextval('sec_usuario')" + "," + "'" + usuario.getNombreUsuario() + "'" + ","
+					+ "'" +usuario.getApellidoPaternoUsuario()+ "'" + "," + "'" + usuario.getApellidoMeternoUsuario() + "'" +","
+					+ "'" + usuario.getSexoDelUsuario() + "'" + "," + "'" + usuario.getCalleUsuario()+ "'" + "," + "'" + usuario.getColoniaUsuario()
+					+ "'" + "," + "'" + usuario.getNumeroUsuario() + "'" + "," + "'" + usuario.getDelegacionUsuario() + "'" + ","
+					+ usuario.getTelUsuario() + "," + usuario.getCelUsuario() + "," + "'" + usuario.getRfcUsuario() + "'" + ","
+					+ "'" + usuario.getEmailUsuario() + "'" + "," + "'" + usuario.getPasswordUsuario() + "'" + "," +"'" + usuario.getFechaNacimiento() + "'" + ");";
+			System.out.println(consultaSQL);
+			sentencia.execute(consultaSQL);
+			System.out.println(resultado);
+			sentencia = conexion.createStatement();
+			String consultaSQL2 = "SELECT \"ID_USUARIO\" FROM \"USUARIO\" WHERE \"EMAIL\"= " 
+					+"'"+ usuario.getEmailUsuario() + "'";
+			resultado = sentencia.executeQuery(consultaSQL2);
+			System.out.println(consultaSQL2);
+			while (resultado.next()) {
+				usuario.setIdUsuario(resultado.getInt("ID_USUARIO"));			
+			}
+			return usuario;
+		} catch (Exception error) {
+			error.printStackTrace();
+		}
+		return null;
+	}
+
 }

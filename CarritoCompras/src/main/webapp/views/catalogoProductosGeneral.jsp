@@ -1,4 +1,9 @@
 <%@ page import="smart.capacitacion.modelo.CarritoCompras" %>
+<%@ page import="smart.capacitacion.modelo.Producto" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="smart.capacitacion.service.*" %>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -7,6 +12,8 @@
 			font-family: sans-serif;
 			}
 		table {
+				display: table-cell;
+				display: inline;
 				padding: 10px;
 				font-family: sans-serif;
 				color:white;
@@ -70,118 +77,52 @@
 			<%CarritoCompras carritoCompras = (CarritoCompras)(session.getAttribute("carritoCompras"));  %>
 			<li><a href="../ProductoServlet">Carrito de Compras (<%= carritoCompras.getProductosEnCarrito().size() %>)Productos</a></li>
 			<li>Mi cuenta</li>
+			<li><form name="loginForm" action="../ComprasServlet" method="post">
+		<a href="confirmacionCompra.jsp">Realizar Compra</a>
+	</form></li>
+			
 		</ul>
 	</nav>
 	<p>
 		
 	</p>
 	<section>
+	<form action="../ProductoServlet">
 	<table>
-		<tr>
-			<td>
-				<img src="../img/converse.jpg" alt = "tenis converse">
-				<p>
-					Tenis Converse $800
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "../img/bicicleta.jpg" alt = "bicicleta">
-				<p>
-					Bicicleta $10,000
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "../img/gameBoy.jpg" alt= "gameBoy">
-				<p>
-					Game boy $5000
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "../img/espada.jpg" alt= "espada">
-				<p>
-					Espada $18,000
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "../img/casco.jpg" alt= "casco">
-				<p>
-					Casco $900
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
+		<%
+		ProductoService productoService = new ProductoServiceImpl();
+		List<Producto> productosAll = new ArrayList<Producto>();
+		productosAll = productoService.obtenerTodosLosProductos();
+		int i=0;
+		int limite=4; 
+		%>
+		<tr>			
+		<%for (; i<limite; i++) {%>
+				<td><input type="hidden" id="idProducto" name="idProducto" value="<%=productosAll.get(i).getIdProducto() %>"/></td>
+				<td><%=productosAll.get(i).getNombreProducto() %></td>		
+				<td><img src="<%=productosAll.get(i).getNombreProducto() %>"/></td>			
+				<td><input type="submit" value="comprar"/>
+		<%} %>
 		</tr>
-	</table>
-	<table>
-		<tr>
-			<td>
-				<img src = "../img/jabon.jpg" alt= "jabon">
-				<p>
-					Jabon $15
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "../img/botella_color.jpg" alt= "botella_color">
-				<p>
-					Botella de color $20
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "../img/millenium_falcon.jpg" alt= "millenium_falcon">
-				<p>
-					Millenium Falcon $900,000
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-			
-			<td>
-				<img src = "../img/at-at.jpg" alt= "at-at">
-				<p>
-					Mascota AT-AT $3000
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
+		<tr>			
+		<%for (;i<limite*2; i++) {%>
+				<td><input type="hidden" id="idProducto" name="idProducto" value="<%=productosAll.get(i).getIdProducto() %>"/></td>
+				<td><%=productosAll.get(i).getNombreProducto() %></td>			
+				<td><img src="<%=productosAll.get(i).getNombreProducto() %>"/></td>			
+				<td><input type="submit" value="comprar"/>
+		<%} %>
+		</tr>
+		<tr>			
+		<%for (; i<productosAll.size(); i++) {%>
+				<td><input type="hidden" id="idProducto" name="idProducto" value="<%=productosAll.get(i).getIdProducto() %>"/></td>
+				<td><%=productosAll.get(i).getNombreProducto() %></td>			
+				<td><img src="<%=productosAll.get(i).getNombreProducto() %>"/></td>			
+				<td><input type="submit" value="comprar"/>
+		<%} %>
+		</tr>
 		
-			<td>
-				<img src = "../img/mustang.jpg" alt= "mustang">
-				<p>
-					Mustang $800,000
-				</p>
-				<p>
-					<input type= "submit" value= "Agregar">
-				</p>
-			</td>
-		</tr>
 	</table>
+	</form>
 	</section>
 </body>
 </html>
