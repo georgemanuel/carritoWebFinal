@@ -8,6 +8,7 @@ public class CarritoCompras {
 	private Usuario usuario;
 	private Double subTotal;
 	private Double total;
+	private Integer status = 1;
 	private List<Producto> productosEnCarrito;
 	
 	
@@ -15,13 +16,20 @@ public class CarritoCompras {
 	 productosEnCarrito= new ArrayList<Producto>();	
 	}
 	
-	public CarritoCompras(Integer idCarrito, Double subTotal, Double total, List<Producto> productosEnCarrito) {
+	
+
+	public CarritoCompras(Integer idCarrito, Usuario usuario, Double subTotal, Double total, Integer status,
+			List<Producto> productosEnCarrito) {
 		super();
 		this.idCarrito = idCarrito;
+		this.usuario = usuario;
 		this.subTotal = subTotal;
 		this.total = total;
+		this.status = status;
 		this.productosEnCarrito = productosEnCarrito;
 	}
+
+
 
 	public Integer getIdCarrito() {
 		return idCarrito;
@@ -61,6 +69,14 @@ public class CarritoCompras {
 
 	public void setProductosEnCarrito(List<Producto> productosEnCarrito) {
 		this.productosEnCarrito = productosEnCarrito;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 	
 	

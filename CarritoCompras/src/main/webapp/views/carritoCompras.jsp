@@ -1,5 +1,8 @@
-<%@ page import="smart.capacitacion.modelo.Producto" %>
 <%@ page import="java.util.*" %>
+<%@ page import="smart.capacitacion.modelo.CarritoCompras" %>
+<%@ page import="smart.capacitacion.modelo.*" %>
+<%@ page import="smart.capacitacion.service.*" %>
+<%@ page import="smart.capacitacion.dao.*" %>
 
 <!DOCTYPE HTML>
 <html>
@@ -32,7 +35,7 @@
 			border-bottom-right-radius: 13px;
 			}
 		header{
-			background-image: url("img/pared.jpg");
+			background-image: url("../img/pared.jpg");
 			background-repeat: repeat-x;
 			background-position: right;
 			background-color: navy;
@@ -73,30 +76,28 @@
 			<li>Mi cuenta</li>
 		</ul>
 	</nav>
-	<p>
-		
-	</p>
 	<section>
+       <form action="../CarritoComprasServlet" method= "post">
 	<table>
-		<%List <Producto> productos = new ArrayList<Producto>();%>
-		<% for (int i=0; i<productos.size();i++){%>
+		<%
+		CarritoCompras carritoCompras  = (CarritoCompras) (session.getAttribute("carritoCompras"));
+		//producto.setIdProducto(Integer.parseInt(request.getParameter("idProducto")));
+		//System.out.println(producto);
+		List<Producto> productosAll = new ArrayList<Producto>();
+		//Producto producto = new Producto();
+		productosAll = carritoCompras.getProductosEnCarrito();
+		//productosAll.add(producto);
+		%>
 		<tr>
-			<td>
-				<img src="../img/converse.jpg" alt = "tenis converse">
-				<p>
-					Tenis Converse $800
-				</p>
-				<p>
-					<input type= "submit" value= "Eliminar">
-				</p>
-				<p>
-					<input type= "submit" value= "Comprar">
-				</p>
-			</td>
-		</tr>	
-		<%}%>	
+		<%for(int i=0;i<productosAll.size();i++){
+			%>
+			<td><%=productosAll.get(i).getNombreProducto()%></td>
+			<td><img src="<%=productosAll.get(i).getUrlImagen()%>"/></td>
+		<%}%>
+		</tr>
 	</table>
-	
+	Productos: <%=carritoCompras.getProductosEnCarrito().size()%>
+	</form>
 	</section>
 </body>
 </html>

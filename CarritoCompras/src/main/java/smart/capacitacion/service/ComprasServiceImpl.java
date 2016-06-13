@@ -25,7 +25,21 @@ public class ComprasServiceImpl implements ComprasService {
 	@Override
 	public Compra realizarCompra(Compra compra) {
 		// TODO Auto-generated method stub
+		
 		return comprasDAO.realizarCompra(compra);
+	}
+
+	@Override
+	public CarritoCompras modificarCarrito(CarritoCompras carritoCompras) {
+		// TODO Auto-generated method stub
+		return comprasDAO.modificarCarrito(carritoCompras);
+	}
+
+	@Override
+	public Compra sumarPrecio(Compra compra) {
+		// TODO Auto-generated method stu
+		
+		return comprasDAO.sumarPrecio(compra);
 	}
 
 

@@ -63,6 +63,13 @@
 			height: 235px;
 			}
 	</style>
+	<script>
+		function enviarFormulario(idProducto){
+			console.log(idProducto)
+			document.getElementById("idProducto").value=idProducto;
+			document.forms.formProductos.submit();
+		}
+	</script>
 	<meta charset="utf-8">
 	<title>catalogo de productos</title>
 </head>
@@ -87,37 +94,35 @@
 		
 	</p>
 	<section>
-	<form action="../ProductoServlet">
+	<form name="formProductos" action="../ProductoServlet">
+	<input type="hidden" id="idProducto" name="idProducto" value=""/>
 	<table>
 		<%
 		ProductoService productoService = new ProductoServiceImpl();
 		List<Producto> productosAll = new ArrayList<Producto>();
 		productosAll = productoService.obtenerTodosLosProductos();
 		int i=0;
-		int limite=4; 
+		int limite=4;
 		%>
-		<tr>			
+		<tr>
 		<%for (; i<limite; i++) {%>
-				<td><input type="hidden" id="idProducto" name="idProducto" value="<%=productosAll.get(i).getIdProducto() %>"/></td>
-				<td><%=productosAll.get(i).getNombreProducto() %></td>		
-				<td><img src="<%=productosAll.get(i).getNombreProducto() %>"/></td>			
-				<td><input type="submit" value="comprar"/>
+				<td><%=productosAll.get(i).getNombreProducto()%></td>
+				<td><img src="<%=productosAll.get(i).getUrlImagen()%>"/></td>
+				<td><input type="button" value="comprar" onclick="enviarFormulario(<%=productosAll.get(i).getIdProducto()%>)"/>
 		<%} %>
 		</tr>
-		<tr>			
+		<tr>
 		<%for (;i<limite*2; i++) {%>
-				<td><input type="hidden" id="idProducto" name="idProducto" value="<%=productosAll.get(i).getIdProducto() %>"/></td>
-				<td><%=productosAll.get(i).getNombreProducto() %></td>			
-				<td><img src="<%=productosAll.get(i).getNombreProducto() %>"/></td>			
-				<td><input type="submit" value="comprar"/>
+				<td><%=productosAll.get(i).getNombreProducto() %></td>
+				<td><img src="<%=productosAll.get(i).getUrlImagen()%>"/></td>
+				<td><input type="button" value="comprar" onclick="enviarFormulario(<%=productosAll.get(i).getIdProducto()%>)"/>
 		<%} %>
 		</tr>
-		<tr>			
+		<tr>
 		<%for (; i<productosAll.size(); i++) {%>
-				<td><input type="hidden" id="idProducto" name="idProducto" value="<%=productosAll.get(i).getIdProducto() %>"/></td>
-				<td><%=productosAll.get(i).getNombreProducto() %></td>			
-				<td><img src="<%=productosAll.get(i).getNombreProducto() %>"/></td>			
-				<td><input type="submit" value="comprar"/>
+				<td><%=productosAll.get(i).getNombreProducto() %></td>
+				<td><img src="<%=productosAll.get(i).getUrlImagen()%>"/></td>
+				<td><input type="button" value="comprar" onclick="enviarFormulario(<%=productosAll.get(i).getIdProducto()%>)"/>
 		<%} %>
 		</tr>
 		

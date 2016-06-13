@@ -15,6 +15,8 @@ import smart.capacitacion.service.CarritoComprasService;
 import smart.capacitacion.service.CarritoComprasServiceImpl;
 
 import smart.capacitacion.service.ComprasServiceImpl;
+import smart.capacitacion.service.UsuarioService;
+import smart.capacitacion.service.UsuarioServiceImpl;
 
 /**
  * Servlet implementation class ComprasServlet
@@ -23,25 +25,26 @@ public class ComprasServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CarritoComprasServiceImpl carritoComprasServiceImpl = new CarritoComprasServiceImpl();
 	ComprasServiceImpl comprasServiceImpl = new ComprasServiceImpl();
-	
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ComprasServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	UsuarioService usuarioServiceImpl= new UsuarioServiceImpl();
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ComprasServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String opcion = request.getParameter("opcion");
-		
-		if(opcion.equals("1")){
+
+		if (opcion.equals("1")) {
 			Compra compra = new Compra();
 			compra.setFormaPago(request.getParameter("formaPago"));
 			compra.setCalle(request.getParameter("calle"));
@@ -52,31 +55,34 @@ public class ComprasServlet extends HttpServlet {
 			compra.setMontoEnvio(Double.parseDouble(request.getParameter("montoEnvio")));
 			compra.setNombreUsuario(request.getParameter("nombreUsuario"));
 			compra.setNumero(request.getParameter("numero"));
-			compra.setPaternoUsuario(request.getParameter("paternoUsuario"));                    
+			compra.setPaternoUsuario(request.getParameter("paternoUsuario"));
 			CarritoCompras carritoCompras = (CarritoCompras) request.getSession().getAttribute("carritoCompras");
-			//System.out.println(carritoCompras);
 			compra.setCarritoCompras(carritoCompras);
-			//System.out.println("productos"+carritoCompras.getIdCarrito());			
-			//System.out.println("productos"+carritoCompras.getProductosEnCarrito().size());
-			//Double total = 0.0;
-			///for (int i=0;i<carritoCompras.getProductosEnCarrito().size();i++ ){
-				
-				//total=total+carritoCompras.getProductosEnCarrito().get(i).getPrecioProducto();
-			//}
-			//compra.setTotal(total);
-			comprasServiceImpl.realizarCompra(compra);	
-			response.sendRedirect("views/login.jsp");	
-			
-		}		
-		
+			 Double total = 0.0;
+			 System.out.println("productos en carrito;"+carritoCompras.getProductosEnCarrito().size());
+			 for (int i=0;i<carritoCompras.getProductosEnCarrito().size();i++){
+				 System.out.println("recorrido"+carritoCompras.getProductosEnCarrito().get(i));
+				 total=total+carritoCompras.getProductosEnCarrito().get(i).getPrecioProducto();
+			 }
+			 compra.setTotal(total);
+			Compra compraFinal = comprasServiceImpl.realizarCompra(compra);
+			if (compraFinal != null) {
+				carritoCompras=comprasServiceImpl.modificarCarrito(carritoCompras);
+				//CarritoCompras carritoCompras2 = new CarritoCompras();
+				//carritoCompras2 = carritoComprasServiceImpl.crearCarritoByUsuario(carritoCompras.getUsuario());
+				//request.getSession().setAttribute("carritoCompras", carritoCompras2 );
+				response.sendRedirect("views/catalogoProductosGeneral.jsp");
+			}
+		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

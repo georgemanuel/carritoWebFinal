@@ -86,9 +86,27 @@ public class ComprasDAO extends DAOGeneral {
 				compra.setIdCompra(resultado.getInt("ID_COMPRA"));
 				return compra;
 			}
+		
+		} catch (Exception error) {
+			error.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public Compra sumarPrecio(Compra compra){
+		try {
+			sentencia = conexion.createStatement();
+			String consultaSQL = "UPDATE \"COMPRA\" "
+					  + "SET \"ID_COMPRA\" =" + compra.getIdCompra() + ", \"ID_CARRITO\" = " + compra.getCarritoCompras().getIdCarrito() + ", \"FECHA_COMPRA\" = " + compra.getFechaCompra() + ", \"FORMA_PAGO\" = " + compra.getFormaPago() + "," + 
+				       "\"NOMBRE_USUARIO\" = " + compra.getNombreUsuario() + ", \"PATERNO_USUARIO\" = " + compra.getPaternoUsuario() + ", \"MATERNO_USUARIO\" = " + compra.getMaternoUsuario() + ", " + 
+				       "\"CALLE\" = "+ compra.getCalle()+ ", \"NUMERO\" = "+ compra.getNumero() + ", \"CODIGO_POSTAL\" = "+ compra.getCodigoPostal() + ", \"COLONIA\" = "+ compra.getColonia() + ", \"NUM_CONFIRMACION\" = " + compra.getNumConfirmacion() + ", " + 
+				       "\"TOTAL\" = " + compra.getTotal() + ", \"MONTO_ENVIO\" = " + compra.getMontoEnvio() + "WHERE \"ID_COMPRA\" = " + compra.getIdCompra() + ";";
+			System.out.println(consultaSQL);
+			sentencia.execute(consultaSQL);			
 			sentencia1 = conexion.createStatement();
 			String consultaSQL3 = "SELECT SUM (P.\"PRECIO\") FROM \"PRODUCTO\" P INNER JOIN \"CARRITO_PRODUCTO\" CP ON (P.\"ID_PRODUCTO\" = CP.\"ID_PRODUCTO\") WHERE CP.\"ID_CARRITO\" ='"
-					+ compra.getCarritoCompras().getIdCarrito() + "'";
+					+ compra.getIdCompra() + "'";
 			resultado1 = sentencia1.executeQuery(consultaSQL3);
 			System.out.println(resultado1);
 			while (resultado1.next()) {
@@ -99,7 +117,27 @@ public class ComprasDAO extends DAOGeneral {
 			error.printStackTrace();
 		}
 		return null;
-
+		
+		
+		
 	}
+	
+	public CarritoCompras modificarCarrito(CarritoCompras carritoCompras) {
+		try {
+			sentencia = conexion.createStatement();
+			String consultaSQL = "UPDATE \"CARRITO_COMPRAS\" SET \"STATUS\" = 0 WHERE \"ID_CARRITO\" = " + carritoCompras.getIdCarrito() + " ";
+			System.out.println(consultaSQL);
+			sentencia.execute(consultaSQL);
+			System.out.println("Se modifico el usuario con exito.");
+			return carritoCompras;
+		}
 
+		catch (Exception error) {
+			error.printStackTrace();
+		}
+		return null;
+
+		
+	}
+	
 }

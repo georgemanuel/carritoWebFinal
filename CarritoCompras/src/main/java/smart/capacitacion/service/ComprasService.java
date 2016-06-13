@@ -15,4 +15,8 @@ public interface ComprasService {
 	public List<Compra> obtenerComprasByFechas(String fechaInicio, String fechaFin);
 	
 	public Compra realizarCompra(Compra compra);
+	
+	public CarritoCompras modificarCarrito(CarritoCompras carritoCompras);
+	
+	public Compra sumarPrecio(Compra compra);
 }

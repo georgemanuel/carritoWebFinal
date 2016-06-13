@@ -6,23 +6,25 @@ public class Producto {
 	// test
 	private Integer idProducto;
 	private String nombreProducto;
-	private Integer precioProducto;
+	private double precioProducto;
 	private String colorProducto;
 	private String marcaProducto;
+	private String UrlImagen;
 	private List<Producto> todosLosProductos;
 	
 	public Producto(){
 		
 	}
 
-	public Producto(Integer idProducto, String nombreProducto, Integer precioProducto, String colorProducto,
-			String marcaProducto, List<Producto> todosLosProductos) {
+	public Producto(Integer idProducto, String nombreProducto, double precioProducto, String colorProducto,
+			String marcaProducto, String urlImagen, List<Producto> todosLosProductos) {
 		super();
 		this.idProducto = idProducto;
 		this.nombreProducto = nombreProducto;
 		this.precioProducto = precioProducto;
 		this.colorProducto = colorProducto;
 		this.marcaProducto = marcaProducto;
+		UrlImagen = urlImagen;
 		this.todosLosProductos = todosLosProductos;
 	}
 
@@ -42,12 +44,12 @@ public class Producto {
 		this.nombreProducto = nombreProducto;
 	}
 
-	public Integer getPrecioProducto() {
+	public double getPrecioProducto() {
 		return precioProducto;
 	}
 
-	public void setPrecioProducto(Integer precioProducto) {
-		this.precioProducto = precioProducto;
+	public void setPrecioProducto(double d) {
+		this.precioProducto = d;
 	}
 
 	public String getColorProducto() {
@@ -73,5 +75,14 @@ public class Producto {
 	public void setTodosLosProductos(List<Producto> todosLosProductos) {
 		this.todosLosProductos = todosLosProductos;
 	}
+
+	public String getUrlImagen() {
+		return UrlImagen;
+	}
+
+	public void setUrlImagen(String urlImagen) {
+		UrlImagen = urlImagen;
+	}
+	
 	
 }

@@ -23,10 +23,10 @@ public class CarritoComprasDAO extends DAOGeneral{
 	 
 	 public CarritoCompras crearCarritoByUsuario(Usuario usuario) {
 			try {
-
+				CarritoCompras carritoCompras2 = new CarritoCompras();
 				sentencia = conexion.createStatement();
-				String consultaSQL = "INSERT INTO public.\"CARRITO_COMPRAS\"(\"ID_CARRITO\", \"ID_USUARIO\")"
-						+ "VALUES (nextval('sec_carrito_compras')" + "," + usuario.getIdUsuario() + ");";
+				String consultaSQL = "INSERT INTO public.\"CARRITO_COMPRAS\"(\"ID_CARRITO\", \"ID_USUARIO\",\"STATUS\")"
+						+ "VALUES (nextval('sec_carrito_compras')" + "," + usuario.getIdUsuario() + ",1);";
 				System.out.println(consultaSQL);
 				sentencia.execute(consultaSQL);
 				sentencia = conexion.createStatement();
@@ -51,7 +51,7 @@ public class CarritoComprasDAO extends DAOGeneral{
 		}
 	 
 	 //agregar producto al carrito
-	 public Producto agregarProductoAlCarrito(CarritoCompras carritoCompras){
+	 public List<Producto> agregarProductoAlCarrito(CarritoCompras carritoCompras){
          try{
         	 //inserta datos idProducto e idCarrito en la tabla carrito_producto
         	 sentencia = conexion.createStatement();
@@ -60,17 +60,21 @@ public class CarritoComprasDAO extends DAOGeneral{
         	 sentencia.execute(consultaSQL);
         	 //recupera esos datos
         	 sentencia2 = conexion.createStatement();
-        	 String consultaSQL2 = "SELECT \"ID_PRODUCTO\" FROM \"CARRITO_PRODUCTO\" p inner join \"CARRITO_COMPRAS\" c on p.\"ID_CARRITO\" = c.\"ID_CARRITO\" where p.\"ID_PRODUCTO\" = " + carritoCompras.getIdCarrito();
+        	 String consultaSQL2 = "SELECT * FROM \"CARRITO_PRODUCTO\" CP INNER JOIN \"PRODUCTO\" P ON P.\"ID_PRODUCTO\" = CP.\"ID_PRODUCTO\" where CP.\"ID_CARRITO\" = " + carritoCompras.getIdCarrito();
         	 System.out.println(consultaSQL2);
         	 resultado = sentencia.executeQuery(consultaSQL2);
         	 List<Producto> listaCarritoCompras = new ArrayList<Producto>();
-        	 Producto producto = null;
+        	 Producto producto;
         	 while(resultado.next()){
         		 producto = new Producto();
         		 producto.setIdProducto(resultado.getInt("ID_PRODUCTO"));
+        		 producto.setColorProducto(resultado.getString("COLOR"));
+        		 producto.setMarcaProducto(resultado.getString("MARCA"));
+        		 producto.setPrecioProducto(resultado.getDouble("PRECIO"));
+        		 producto.setNombreProducto(resultado.getString("NOMBRE_PRODUCTO"));
         		 listaCarritoCompras.add(producto);
         	 }
-        		 return producto;
+        	 return listaCarritoCompras;
         	 }
          
         	 catch(Exception error){

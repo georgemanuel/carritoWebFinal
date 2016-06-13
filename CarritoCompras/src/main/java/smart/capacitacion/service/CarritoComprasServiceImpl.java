@@ -1,6 +1,9 @@
 package smart.capacitacion.service;
 
+import java.util.List;
+
 import smart.capacitacion.dao.CarritoComprasDAO;
+
 import smart.capacitacion.dao.ProductoDAO;
 import smart.capacitacion.dao.UsuarioDAO;
 import smart.capacitacion.modelo.CarritoCompras;
@@ -26,7 +29,7 @@ public class CarritoComprasServiceImpl implements CarritoComprasService {
 	}
 
 	@Override
-	public Producto agregarProductoAlCarrito(CarritoCompras carritoCompras) {
+	public List<Producto> agregarProductoAlCarrito(CarritoCompras carritoCompras) {
 			return this.carritoComprasDAO.agregarProductoAlCarrito(carritoCompras);
 	}
 	

@@ -39,15 +39,16 @@ public class ProductoServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		Producto producto = new Producto();
 		producto.setIdProducto(Integer.parseInt(request.getParameter("idProducto")));
-		System.out.println(producto);
+		System.out.println("id"+producto.getIdProducto());
 		List<Producto> productos = new ArrayList<Producto>();
 		productos.add(producto);
 		CarritoCompras carritoCompras = (CarritoCompras) request.getSession().getAttribute("carritoCompras");
 		carritoCompras.setProductosEnCarrito(productos);
 		//mando  llamar al service
-		producto = carritoComprasService.agregarProductoAlCarrito(carritoCompras);
+		productos = carritoComprasService.agregarProductoAlCarrito(carritoCompras);
+		carritoCompras.setProductosEnCarrito(productos);
 		request.getSession().setAttribute("carritoCompras", carritoCompras);
-		System.out.println(carritoCompras);
+		System.out.println(carritoCompras.getProductosEnCarrito().size());
 		response.sendRedirect("views/carritoCompras.jsp");
 		
 	}
@@ -58,7 +59,5 @@ public class ProductoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
 	}
-
 }

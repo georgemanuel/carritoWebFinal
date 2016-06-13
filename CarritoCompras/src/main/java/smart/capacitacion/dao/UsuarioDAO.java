@@ -62,7 +62,7 @@ public class UsuarioDAO extends DAOGeneral{
 		try {
 
 			sentencia = conexion.createStatement();
-			String consultaSQL = "SELECT \"ID_CARRITO\"  FROM \"USUARIO\" U INNER JOIN \"CARRITO_COMPRAS\" C ON (U.\"ID_USUARIO\" = C.\"ID_USUARIO\") WHERE U.\"ID_USUARIO\"='" + usuario.getIdUsuario() + "'";
+			String consultaSQL = "SELECT \"ID_CARRITO\"  FROM \"USUARIO\" U INNER JOIN \"CARRITO_COMPRAS\" C ON (U.\"ID_USUARIO\" = C.\"ID_USUARIO\") WHERE \"STATUS\" = 1 AND U.\"ID_USUARIO\"='" + usuario.getIdUsuario() + "'";
 			System.out.println(consultaSQL);
 			resultado = sentencia.executeQuery(consultaSQL);
 			while (resultado.next()) {
@@ -79,7 +79,6 @@ public class UsuarioDAO extends DAOGeneral{
 					producto.setColorProducto(resultado.getString("COLOR"));
 					producto.setPrecioProducto(resultado.getInt("PRECIO"));
 					producto.setMarcaProducto(resultado.getString("MARCA"));
-					//Agregar todos los atributos
 					productos.add(producto);
 				}				
 				carritoCompras.setProductosEnCarrito(productos);
